@@ -18,6 +18,7 @@ void print_list(struct node *list) {
 struct node * insert_front(struct node *list, char *artist, char *data) {
   struct node *front = calloc(1, sizeof(struct node));
   front->next = list;
+  front->prev = NULL;
   strncpy(front->artist, data, sizeof front->artist);
   strncpy(front->name, data, sizeof front->name);
 

@@ -4,6 +4,8 @@
 struct node {
   char name[128];
   char artist[128];
+
+  struct node *prev;
   struct node *next;
 };
 
