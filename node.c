@@ -29,6 +29,35 @@ struct node * insert_front(struct node *list, char *artist, char *data) {
   return front;
 }
 
+struct node * first_node_with_artist(struct node *list, char *artist) {
+  for(; list != NULL; list = list->next) {
+    if(strcmp(list->artist, artist) == 0) {
+      return list;
+    }
+  }
+
+  //no match found
+  return NULL;
+}
+
+struct node * free_node(struct node *node) {
+  if(node->prev && node->next) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
+
+  else if(node->prev) {
+    node->prev->next = NULL;
+  }
+
+  else if(node->next) {
+    node->next->prev = NULL;
+  }
+
+  free(node);
+
+  return NULL;
+}
 
 struct node * free_list(struct node *list) {
   while(list != NULL) {
