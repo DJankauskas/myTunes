@@ -24,4 +24,8 @@ int main(){
     // insert after writing print_node function
     printf("Testing find_node: \n ====================");
     // insert after writing find_node funtion
+
+    printf("\nTesting get_random: \n ====================\n");
+    struct node *random = get_random(linked_list);
+    //insert after writing print_node function
 }

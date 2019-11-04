@@ -63,6 +63,26 @@ int songcmp(struct node *s1, struct node *s2) {
   else return artist_cmp;
 }
 
+size_t get_length(struct node *list) {
+  size_t length = 0;
+  for(; list != NULL; list = list->next) {
+    length++;
+  }
+  return length;
+}
+
+struct node * get_nth(struct node *list, size_t n) {
+  for(; n != 0; n--) {
+    list = list->next;
+  }
+  return list;
+}
+
+struct node * get_random(struct node *list) {
+  size_t length = get_length(list);
+  return get_nth(rand() % length);
+}
+
 struct node * free_node(struct node *node) {
   if(node->prev && node->next) {
     node->prev->next = node->next;
