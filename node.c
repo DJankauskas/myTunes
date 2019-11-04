@@ -65,7 +65,7 @@ struct node * find_node(struct node *list, char *artist, char *data) {
 
 void print_node(struct node *node) {
   if(node) {
-    printf("%s : %s");
+    printf("%s : %s", node->artist, node->name);
   }
   else printf("null");
 }
