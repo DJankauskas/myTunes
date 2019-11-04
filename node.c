@@ -29,6 +29,28 @@ struct node * insert_front(struct node *list, char *artist, char *data) {
   return front;
 }
 
+struct node * insert_in_order(struct node *front, char *artist, char *name) {
+  if(!front) {
+    return insert_front(NULL, artist, name);
+  }
+
+  struct node dummy = { .artist = artist, .name = name, .prev = NULL, .next = NULL };
+  struct node *ret = front;
+  for(; front->next != NULL; front = front->next) {
+    if(songcmp(&dummy, front) > 0) {
+      insert_front(front, artist, name);
+      return ret;
+    }
+  }
+
+  //current data goes last
+  dummy.prev = front;
+  struct node *last = malloc(sizeof(struct node));
+  memcpy(last, &dummy, sizeof(struct node));
+  front->next = last;
+  return ret;
+}
+
 struct node * find_node(struct node *list, char *artist, char *data) {
   for(; list != NULL; list = list->next){
     if(strcmp(list->artist, artist) == 0) {
