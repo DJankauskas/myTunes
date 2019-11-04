@@ -2,14 +2,14 @@
 #define __NODE_GUARD
 
 struct node {
-  char name[128];
-  char artist[128];
-
-  struct node *prev;
-  struct node *next;
+    char name[128];
+    char artist[128];
+    
+    struct node *prev;
+    struct node *next;
 };
 
-void print_node(struct node *list, char *artist, char *data);
+void print_node(struct node *node);
 void print_list(struct node *list);
 
 //characters beyond index 127 will be ignored
