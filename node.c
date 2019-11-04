@@ -41,11 +41,11 @@ struct node * find_node(struct node *list, char *artist, char *data) {
   return NULL;
 }
 
-void print_node(struct node *list, char *artist, char *data){
-    if (find_node(list, artist, data) != NULL){
-        printf("%s : %s\n", artist, data);
-    }
-    else printf("not found");
+void print_node(struct node *node) {
+  if(node) {
+    printf("%s : %s");
+  }
+  else printf("null");
 }
 
 struct node * find_artist(struct node *list, char *artist) {

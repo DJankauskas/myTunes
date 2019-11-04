@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "node.h"
 
 int main(){
     printf("LINKED LIST TESTS \n ====================");
@@ -48,19 +49,19 @@ int main(){
     printf("looking for: Travis Scott\n");
     if((find_artist(linked_list, "Travis Scott")) != NULL){
     printf("found artist:\n");
-    printf(find_artist(linked_list, "Travis Scott"));
+    print_node(find_artist(linked_list, "Travis Scott"));
     }
     else printf("artist not found");
     printf("looking for: Eminem\n");
     if((find_artist(linked_list, "Eminem")) != NULL){
         printf("found artist:\n");
-        printf(find_artist(linked_list, "Eminem"));
+        print_node(find_artist(linked_list, "Eminem"));
     }
     else printf("artist not found");
     printf("looking for: John\n");
     if((find_artist(linked_list, "John")) != NULL){
         printf("found artist:\n");
-        printf(find_artist(linked_list, "John"));
+        print_node(find_artist(linked_list, "John"));
     }
     else printf("artist not found");
     printf("\nTesting songcmp: \n ====================");

@@ -9,6 +9,7 @@ struct node {
   struct node *next;
 };
 
+void print_node(struct node *list, char *artist, char *data);
 void print_list(struct node *list);
 
 //characters beyond index 127 will be ignored
@@ -18,14 +19,10 @@ struct node * insert_front(struct node *list, char *artist, char *name);
 //NULL returned on no match
 struct node * find_artist(struct node *list, char *artist);
 
-struct node * find_node(struct node *list, char *artist, char *data);
+struct node * find_node(struct node *node);
 
 //compare by artist, then name
 int songcmp(struct node *s1, struct node *s2);
-
-//currently internal only
-size_t get_length(struct node *list);
-struct node * get_nth(struct node *list, size_t n);
 
 struct node * get_random(struct node *list);
 
