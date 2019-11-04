@@ -63,6 +63,7 @@ struct node * find_node(struct node *node, char *artist, char *name){
     return NULL;
 }
 
+<<<<<<< HEAD
 void print_node(struct node *node) {
     if(node) {
         printf("%s : %s", node->artist, node->name);
@@ -91,6 +92,96 @@ int songcmp(struct node *s1, struct node *s2) {
     //different artists, compare by their names
     else return artist_cmp;
 }
+=======
+struct node * insert_in_order(struct node *front, char *artist, char *name) {
+  if(!front) {
+    return insert_front(NULL, artist, name);
+  }
+
+  struct node dummy = { .artist = artist, .name = name, .prev = NULL, .next = NULL };
+  struct node *ret = front;
+  for(; front->next != NULL; front = front->next) {
+    if(songcmp(&dummy, front) > 0) {
+      insert_front(front, artist, name);
+      return ret;
+    }
+  }
+
+  //current data goes last
+  dummy.prev = front;
+  struct node *last = malloc(sizeof(struct node));
+  memcpy(last, &dummy, sizeof(struct node));
+  front->next = last;
+  return ret;
+}
+
+struct node * find_node(struct node *list, char *artist, char *data) {
+  for(; list != NULL; list = list->next){
+    if(strcmp(list->artist, artist) == 0) {
+      if(strcmp(list->name, data) == 0) {
+        return list;
+      }
+    }
+  }
+  //no match
+  return NULL;
+}
+
+void print_node(struct node *node) {
+  if(node) {
+    printf("%s : %s", node->artist, node->name);
+  }
+  else printf("null");
+}
+
+struct node * find_artist(struct node *list, char *artist) {
+  for(; list != NULL; list = list->next) {
+    if(strcmp(list->artist, artist) == 0) {
+      return list;
+    }
+  }
+  //no match found
+  return NULL;
+}
+
+int songcmp(struct node *s1, struct node *s2) {
+  int artist_cmp = strcmp(s1->artist, s2->artist);
+
+  //same artist
+  if(artist_cmp == 0) {
+    return strcmp(s1->name, s2->name);
+  }
+
+  //different artists, compare by their names
+  else return artist_cmp;
+}
+
+size_t get_length(struct node *list) {
+  size_t length = 0;
+  for(; list != NULL; list = list->next) {
+    length++;
+  }
+  return length;
+}
+
+struct node * get_nth(struct node *list, size_t n) {
+  for(; n != 0; n--) {
+    list = list->next;
+  }
+  return list;
+}
+
+struct node * get_random(struct node *list) {
+  size_t length = get_length(list);
+  return get_nth(rand() % length);
+}
+
+struct node * free_node(struct node *node) {
+  if(node->prev && node->next) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
+>>>>>>> ccfd12f433d19e44349948910ad25f2e5825f1c2
 
 size_t get_length(struct node *list) {
     size_t length = 0;
