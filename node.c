@@ -29,15 +29,38 @@ struct node * insert_front(struct node *list, char *artist, char *data) {
   return front;
 }
 
-struct node * first_node_with_artist(struct node *list, char *artist) {
+struct node * find_node(struct node *list, char *artist, char *data) {
+  for(; list != NULL; list = list->next){
+    if(strcmp(list->artist, artist) == 0) {
+      if(strcmp(list->name, data) == 0) {
+        return list;
+      }
+    }
+  }
+  //no match
+  return NULL;
+}
+
+struct node * find_artist(struct node *list, char *artist) {
   for(; list != NULL; list = list->next) {
     if(strcmp(list->artist, artist) == 0) {
       return list;
     }
   }
-
   //no match found
   return NULL;
+}
+
+int songcmp(struct node *s1, struct node *s2) {
+  int artist_cmp = strcmp(s1->artist, s2->artist);
+
+  //same artist
+  if(artist_cmp == 0) {
+    return strcmp(s1->name, s2->name);
+  }
+
+  //different artists, compare by their names
+  else return artist_cmp;
 }
 
 struct node * free_node(struct node *node) {

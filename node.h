@@ -16,7 +16,12 @@ struct node * insert_front(struct node *list, char *artist, char *name);
 
 //returned pointer may be invalidated by any mutating function called after this call!
 //NULL returned on no match
-struct node * first_node_with_artist(struct node *list, char *artist);
+struct node * find_artist(struct node *list, char *artist);
+
+struct node * find_node(struct node *list, char *artist, char *data);
+
+//compare by artist, then name
+int songcmp(struct node *s1, struct node *s2);
 
 //returns pointer to given node, which is now NULL
 struct node * free_node(struct node *node);
