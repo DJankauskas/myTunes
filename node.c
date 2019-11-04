@@ -29,15 +29,36 @@ struct node * insert_front(struct node *list, char *artist, char *data) {
   return front;
 }
 
-struct node * first_node_with_artist(struct node *list, char *artist) {
+struct node * find_node(struct node *list, char *artist, char *data){
+    for(; list != NULL; list = list->next){
+        if(strcmp(list->artist, artist) == 0) {
+            if(strcmp(list->name, data) == 0) {
+                return list;
+            }
+        }
+    }
+}
+
+void print_node(struct node *list, char *artist, char *data){
+    if (find_node(list, artist, data) != NULL){
+        printf("%s : %s\n", artist, data);
+    }
+    else printf("not found");
+}
+
+struct node * find_artist(struct node *list, char *artist) {
   for(; list != NULL; list = list->next) {
     if(strcmp(list->artist, artist) == 0) {
       return list;
+      find_node_with_artist(list, artist);
     }
   }
-
   //no match found
   return NULL;
+}
+
+int songcmp(struct node *s1, struct node *s2){
+    return strcmp(s1->name, s2->name);
 }
 
 struct node * free_node(struct node *node) {
