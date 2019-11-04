@@ -41,6 +41,13 @@ struct node * find_node(struct node *list, char *artist, char *data) {
   return NULL;
 }
 
+void print_node(struct node *list, char *artist, char *data){
+    if (find_node(list, artist, data) != NULL){
+        printf("%s : %s\n", artist, data);
+    }
+    else printf("not found");
+}
+
 struct node * find_artist(struct node *list, char *artist) {
   for(; list != NULL; list = list->next) {
     if(strcmp(list->artist, artist) == 0) {
