@@ -23,6 +23,12 @@ struct node * find_node(struct node *list, char *artist, char *data);
 //compare by artist, then name
 int songcmp(struct node *s1, struct node *s2);
 
+//currently internal only
+size_t get_length(struct node *list);
+struct node * get_nth(struct node *list, size_t n);
+
+struct node * get_random(struct node *list);
+
 //returns pointer to given node, which is now NULL
 struct node * free_node(struct node *node);
 
