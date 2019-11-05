@@ -4,12 +4,11 @@
 #include <string.h>
 
 void print_list(struct node *list) {
-    printf("[ ");
     while(list != NULL) {
-        printf("%s : %s, ", list->artist, list->name);
+        print_node(list);
+        printf(" |");
         list = list->next;
     }
-    printf("]");
 }
 
 
@@ -25,6 +24,14 @@ struct node * insert_front(struct node *list, char *artist, char *name) {
     //ensure null termination
     front->artist[(sizeof front->artist) - 1] = '\0';
     front->name[(sizeof front->name) - 1] = '\0';
+
+    if(list) {
+      if(list->prev) {
+        list->prev->next = front;
+        front->prev = list->prev;
+      }
+      list->prev = front;
+    }
     
     return front;
 }
@@ -38,27 +45,27 @@ struct node * insert_in_order(struct node *front, char *artist, char *name) {
   strncpy(dummy.artist, artist, sizeof dummy.artist);
   strncpy(dummy.name, name, sizeof dummy.name);
   struct node *ret = front;
-  for(; front->next != NULL; front = front->next) {
-    if(songcmp(&dummy, front) > 0) {
-      insert_front(front, artist, name);
+  for(; front != NULL; front = front->next) {
+    if(songcmp(&dummy, front) < 0) {
+      struct node *new = insert_front(front, artist, name);
+      return front == ret ? new : ret;
+    }
+    if(!front->next) {
+      struct node *new = insert_front(NULL, artist, name);
+      front->next = new;
+      new->prev = front;
       return ret;
     }
   }
 
-  //current data goes last
-  dummy.prev = front;
-  struct node *last = malloc(sizeof(struct node));
-  memcpy(last, &dummy, sizeof(struct node));
-  front->next = last;
+  //unreachable
   return ret;
 }
 
-struct node * find_node(struct node *list, char *artist, char *data) {
+struct node * find_node(struct node *list, char *artist, char *name) {
   for(; list != NULL; list = list->next){
-    if(strcmp(list->artist, artist) == 0) {
-      if(strcmp(list->name, data) == 0) {
-        return list;
-      }
+    if(strcmp(list->artist, artist) == 0 && strcmp(list->name, name) == 0) {
+      return list;
     }
   }
   //no match
@@ -67,7 +74,7 @@ struct node * find_node(struct node *list, char *artist, char *data) {
 
 void print_node(struct node *node) {
   if(node) {
-    printf("%s : %s", node->artist, node->name);
+    printf("%s: %s", node->artist, node->name);
   }
   else printf("null");
 }
@@ -116,7 +123,7 @@ struct node * get_random(struct node *list) {
   return get_nth(list, rand() % length);
 }
 
-struct node * free_node(struct node *node) {
+struct node * free_node(struct node *front, struct node *node) {
     if(node->prev && node->next) {
         node->prev->next = node->next;
         node->next->prev = node->prev;
@@ -129,10 +136,12 @@ struct node * free_node(struct node *node) {
     else if(node->next) {
         node->next->prev = NULL;
     }
+
+    struct node *front_next = front->next;
     
     free(node);
     
-    return NULL;
+    return front == node ? front_next : front;
 }
 
 struct node * free_list(struct node *list) {

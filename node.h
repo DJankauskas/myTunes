@@ -28,8 +28,8 @@ int songcmp(struct node *s1, struct node *s2);
 
 struct node * get_random(struct node *list);
 
-//returns pointer to given node, which is now NULL
-struct node * free_node(struct node *node);
+//returns pointer to list
+struct node * free_node(struct node *front, struct node *node);
 
 //returns pointer to list, which is now NULL
 struct node * free_list(struct node *list);
