@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+
 #include "node.h"
+#include "song.h"
 
 void test_find_node(struct node *list, char *artist, char *name) {
     struct node *n = find_node(list, artist, name);
