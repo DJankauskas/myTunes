@@ -24,54 +24,91 @@ void test_find_artist(struct node *linked_list, char *artist) {
     else printf("artist not found");
 }
 
+void test_print_song(song_node *song, char *artist, char *name) {
+    song = find_song(song, artist, name);
+    if(song) print_song(song);
+    else printf("song not found");
+}
+
 int main() {
     srand(time(NULL));
 
-    printf("LINKED LIST TESTS \n ====================");
-    struct node * linked_list = NULL;
-    printf("empty list: \n");
-    print_list(linked_list);
+    printf("LINKED LIST TESTS====================");
+    struct node * list = NULL;
     printf("\nlist with decent songs: \n");
-    linked_list = insert_front(linked_list, "travis scott", "anecdote");
-    linked_list = insert_front(linked_list, "travis scott", "goosebumps");
-    linked_list = insert_front(linked_list, "lil baby and gunna", "drip harder");
-    linked_list = insert_front(linked_list, "meek mill", "going bad");
-    linked_list = insert_front(linked_list, "drake", "god's plan");
-    linked_list = insert_front(linked_list, "drake", "scorpion");
-    linked_list = insert_front(linked_list, "eminem", "rap god");
-    linked_list = insert_front(linked_list, "eminem", "lose yourself");
-    print_list(linked_list);
-    printf("\n\n");
-    printf("\nTesting print_node: (Expect eminem : lose yourself) \n");
-    print_node(linked_list);
-    printf("\nTesting get_random: \n");
-    struct node *random = get_random(linked_list);
+    list = insert_front(list, "travis scott", "anecdote");
+    list = insert_front(list, "travis scott", "goosebumps");
+    list = insert_front(list, "lil baby and gunna", "drip harder");
+    list = insert_front(list, "meek mill", "going bad");
+    list = insert_front(list, "drake", "god's plan");
+    list = insert_front(list, "drake", "scorpion");
+    list = insert_front(list, "eminem", "rap god");
+    list = insert_front(list, "eminem", "lose yourself");
+    print_list(list);
+    printf("\n\nTesting print_node: (Expect eminem: lose yourself)====== \n");
+    print_node(list);
+
+    printf("\n\nTest adding in order (function calls same order as above)======\n");
+    list = free_list(list);
+    list = insert_in_order(list, "travis scott", "anecdote");
+    list = insert_in_order(list, "travis scott", "goosebumps");
+    list = insert_in_order(list, "lil baby and gunna", "drip harder");
+    list = insert_in_order(list, "meek mill", "going bad");
+    list = insert_in_order(list, "drake", "god's plan");
+    list = insert_in_order(list, "drake", "scorpion");
+    list = insert_in_order(list, "eminem", "rap god");
+    list = insert_in_order(list, "eminem", "lose yourself");
+    printf("Printing list:\n");
+    print_library(list);
+
+    printf("\n\nTesting get_random====== \n");
+    struct node *random = get_random(list);
     print_node(random);
-    printf("\nTesting find_node: \n");
-    printf("looking for: drake : god's plan\n");
-    test_find_node(linked_list, "drake", "god's plan");
+    printf("\n");
+    random = get_random(list);
+    print_node(random);
+    printf("\n");
+    random = get_random(list);
+    print_node(random);
 
-    printf("\nlooking for: travis scott, anecdote\n");
-    test_find_node(linked_list, "travis scott", "anecdote");
+    printf("\n\nTesting find_node====== \n");
+    printf("looking for drake: god's plan\n");
+    test_find_node(list, "drake", "god's plan");
 
-    printf("\nlooking for: elo : mr. blue sky (expect not found)\n");
-    test_find_node(linked_list, "elo", "mr. blue sky");
+    printf("\nlooking for travis scott: anecdote\n");
+    test_find_node(list, "travis scott", "anecdote");
 
-    printf("\nTesting find_artist: \n");
+    printf("\nlooking for elo: mr. blue sky (expect not found)\n");
+    test_find_node(list, "elo", "mr. blue sky");
+
+    printf("\n\nTesting find_artist====== \n");
     printf("looking for: eminem\n");
-    test_find_artist(linked_list, "eminem");
+    test_find_artist(list, "eminem");
     
-    printf("\nlooking for: john (expect not found)\n");
-    test_find_artist(linked_list, "john");
+    printf("\nlooking for: john (no song expected)\n");
+    test_find_artist(list, "john");
 
-    printf("\nTesting songcmp: \n");
-    //insert songcmp tests
+    printf("\n\nTesting songcmp====== \n");
+    printf("Comparing "); print_node(list); printf(" to "); print_node(list); printf(":\n");
+    printf("%d\n", songcmp(list, list));
+    printf("Comparing "); print_node(list); printf(" to "); print_node(list->next); printf(":\n");
+    printf("%d\n", songcmp(list, list->next));
 
-    printf("\nTesting free_list: \n");
-    //insert free node tests
-    
-    
-    
+    printf("\n\nTesting free_node======");
+    printf("\nTesting free_node by removing "); print_node(list->next); printf(":\n");
+    list = free_node(list, list->next);
+    print_list(list);
+
+    printf("\nTesting free_node by removing "); print_node(list->next); printf(":\n");
+    list = free_node(list, list->next);
+    print_list(list);
+
+    printf("\n\nTesting free_list======");
+    printf("List before freeing:\n");
+    print_list(list);
+    printf("List after freeing:\n");
+    list = free_list(list);
+    print_list(list);
     
     
     printf("\n\n MUSIC LIBRARY TESTING\n\n");
@@ -85,52 +122,73 @@ int main() {
     lib = add_song(lib, "drake", "god's plan");
     lib = add_song(lib, "drake", "scorpion");
     lib = add_song(lib, "eminem", "rap god");
+
+    printf("Test print_library====== \n");
     print_library(lib);
     
-    printf("Testing print_letter\n");
-    printf("\nprinting A-list:\n");
+    printf("\n\nTesting print_letter======");
+    printf("\nPrinting A-list:\n");
     print_letter(lib, 'a');
-    printf("\nprinting D-list:\n");
+    printf("\nPrinting D-list:\n");
     print_letter(lib, 'd');
-    printf("\nprinting E-list:\n");
+    printf("\nPrinting E-list:\n");
     print_letter(lib, 'e');
-    printf("\nprinting R-list:\n");
+    printf("\nPrinting R-list:\n");
     print_letter(lib, 'r');
-    printf("\nprinting L-list:\n");
+    printf("\nPrinting L-list:\n");
     print_letter(lib, 'l');
-    printf("\nprinting T-list:\n");
+    printf("\nPrinting T-list:\n");
     print_letter(lib, 't');
     
-    printf("\nTesting Find:\n");
-    printf("searching for travis scott - goosebumps:\n");
-    print_song(find_song(lib, "travis scott", "goosebumps"));
-    printf("\nsearching for eminem - rap god:\n");
-    print_song(find_song(lib, "eminem", "rap god"));
-    printf("\nsearching for drake - god's plan:\n");
-    print_song(find_song(lib, "drake", "god's plan"));
+    printf("\n\nTesting Find======\n");
+    printf("Searching for travis scott - goosebumps:\n");
+    test_print_song(lib, "travis scott", "goosebumps");
+    printf("\nSearching for eminem - rap god:\n");
+    test_print_song(lib, "eminem", "rap god");
+    printf("\nSearching for drake - yeezys:\n");
+    test_print_song(lib, "drake", "yeezys");
     
-    printf("\nTesting artist search:\n");
-    printf("searching for eminem:\n");
+    printf("\n\nTesting artist search======\n");
+    printf("Searching for eminem:\n");
     print_artist(lib, "eminem");
-    printf("\nsearching for travis scott:\n");
+    printf("\nSearching for travis scott:\n");
     print_artist(lib, "travis scott");
-    printf("\nsearching for lil baby and gunna:\n");
-    print_artist(lib, "lil baby and gunna");
+    printf("\nSearching for beethoven:\n");
+    print_artist(lib, "beethoven");
     
-    printf("\nTesting Shuffle:\n");
+    printf("\n\nTesting Shuffle======\n");
+    print_shuffled(lib);
+    printf("\nAnother shuffle:\n");
     print_shuffled(lib);
     
-    printf("\nRemove Songs from Library:\n");
-    printf("removing lil baby and gunna - drip harder:\n");
+    printf("\n\nRemove songs from library======\n");
+    printf("Removing lil baby and gunna - drip harder:\n");
     lib = remove_song(lib, find_song(lib, "lil baby and gunna", "drip harder"));
     print_library(lib);
-    printf("\nremoving drake - scorpion:\n");
+    printf("\nRemoving drake - scorpion:\n");
     lib = remove_song(lib, find_song(lib, "drake", "scorpion"));
     print_library(lib);
     
-    printf("\nfreeing/clearing library:\n");
+    printf("\n\nClearing library======\n");
     lib = clear_library(lib);
-    printf("\nlibrary after freeing:\n");
+    printf("\nLibrary after freeing:\n");
     print_library(lib);
+
+    printf("\n\nAdding to cleared library======\n");
+    lib = add_song(lib, "abba", "money");
+    lib = add_song(lib, "billie elish", "bad guy");
+    lib = add_song(lib, "abba", "waterloo");
+    lib = add_song(lib, "unicode consortium", "emoji 12.0");
+    print_library(lib);
+
+    printf("\n\nTest print_artist======");
+    printf("\nabba songs: \n");
+    print_artist(lib, "abba");
+
+    printf("\n\nClear library======");
+    printf("\nLibrary after clear:");
+    lib = clear_library(lib);
+    print_library(lib);
+
     printf("\n");
 }
