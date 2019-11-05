@@ -69,4 +69,75 @@ int main() {
 
     printf("\nTesting free_list: \n");
     //insert free node tests
+    
+    
+    
+    
+    
+    printf("\n\n MUSIC LIBRARY TESTING\n\n");
+    
+    struct song_node * lib[30];
+    for (int i = 0; i < 27; i++) {
+        lib[i] = NULL;
+    }
+    
+    add_song(lib, "travis scott", "anecdote");
+    add_song(lib, "travis scott", "goosebumps");
+    add_song(lib, "lil baby and gunna", "drip harder");
+    add_song(lib, "meek mill", "going bad");
+    add_song(lib, "drake", "god's plan");
+    add_song(lib, "drake", "scorpion");
+    add_song(lib, "eminem", "rap god");
+    add_song(lib,"eminem", "lose yourself");
+    print_library(lib);
+    
+    printf("Testing print_letter\n");
+    printf("\nprinting A-list:\n");
+    print_letter(lib, 'A');
+    printf("printing G-list:\n");
+    print_letter(lib, 'G');
+    printf("printing D-list:\n");
+    print_letter(lib, 'D');
+    printf("printing R-list:\n");
+    print_letter(lib, 'R');
+    printf("printing L-list:\n");
+    print_letter(lib, 'L');
+    printf("printing T-list:\n");
+    print_letter(lib, 'T');
+    
+    printf("\nTesting Find:\n");
+    printf("searching for travis scott - goosebumps:\n");
+    find_song(lib, "travis scott", "goosebumps");
+    printf("searching for eminem - rap god:\n");
+    find_song(lib, "eminem", "rap god");
+    printf("searching for drake - god's plan:\n");
+    find_song(lib, "drake", "god's plan");
+    
+    printf("\nTesting artist search:\n");
+    printf("searching for eminem:\n");
+    print_artist(lib, "eminem");
+    printf("searching for travis scott:\n");
+    print_artist(lib, "travis scott");
+    printf("searching for lil baby and gunna:\n");
+    print_artist(lib, "lil baby and gunna");
+    
+    printf("\nTesting Shuffle:\n");
+    print_shuffled(lib);
+    
+    printf("\nRemove Songs from Library:\n");
+    printf("removing lil baby and gunna - drip harder:\n");
+    remove_song("drip harder");
+    print_library(lib);
+    printf("removing drake - scorpion:\n");
+    remove_song("scorpion");
+    print_library(lib);
+    printf("removing eminem - lose yourself:\n");
+    remove_song("lose ymaourself");
+    print_library(lib);
+    
+    printf("\nfreeing/clearing library:\n");
+    clear_library(lib);
+    printf("\nlibrary after freeing:\n");
+    print_library(lib);
+    printf("\n");
 }
