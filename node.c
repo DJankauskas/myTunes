@@ -72,7 +72,7 @@ void print_node(struct node *node) {
   else printf("null");
 }
 
-struct node * find_artist(struct node *list, char *artist) {
+struct node * find_first_artist(struct node *list, char *artist) {
   for(; list != NULL; list = list->next) {
     if(strcmp(list->artist, artist) == 0) {
       return list;
@@ -111,6 +111,7 @@ size_t get_length(struct node *list) {
 }
 
 struct node * get_random(struct node *list) {
+  if(!list) return NULL;
   size_t length = get_length(list);
   return get_nth(list, rand() % length);
 }

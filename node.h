@@ -19,7 +19,7 @@ struct node * insert_in_order(struct node *front, char *artist, char *name);
 
 //returned pointer may be invalidated by any mutating function called after this call!
 //NULL returned on no match
-struct node * find_artist(struct node *list, char *artist);
+struct node * find_first_artist(struct node *list, char *artist);
 
 struct node * find_node(struct node *node, char *artist, char *name);
 
