@@ -4,14 +4,17 @@ else
         CC = gcc
 endif
 
-all: main.o node.o
-	$(CC) -o myTunes.out main.o node.o
+all: main.o node.o song.o
+	$(CC) -o myTunes.out main.o node.o song.o
 
 main.o: main.c node.h
 	$(CC) -c main.c
 
 node.o: node.c node.h
 	$(CC) -c node.c node.h
+
+song.o: song.c song.h node.h
+	$(CC) -c song.c song.h
 
 memtest:
 	valgrind --leak-check=true ./myTunes.out
