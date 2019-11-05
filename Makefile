@@ -17,7 +17,7 @@ song.o: song.c song.h node.h
 	$(CC) -c song.c song.h
 
 memtest:
-	valgrind --leak-check=true ./myTunes.out
+	valgrind --leak-check=yes ./myTunes.out
 
 run:
 	./myTunes.out
