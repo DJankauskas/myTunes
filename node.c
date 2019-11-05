@@ -6,7 +6,7 @@
 void print_list(struct node *list) {
     while(list != NULL) {
         print_node(list);
-        printf(" |");
+        printf(" | ");
         list = list->next;
     }
 }
