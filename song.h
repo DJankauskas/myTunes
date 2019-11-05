@@ -17,4 +17,7 @@ void print_artist(song_node *songs, char *artist);
 
 void print_shuffled(song_node *songs);
 
+song_node * remove_song(song_node *song);
+song_node * clear_library(song_node *library);
+
 #endif //__SONG_INCLUDES
